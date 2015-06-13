@@ -8,5 +8,6 @@
 ```
 # brew install redis
 # redis-server /usr/local/etc/redis.conf
-# redis-cli > monitor
+# redis-cli
+> monitor
 ```
