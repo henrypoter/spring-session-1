@@ -1,0 +1,122 @@
+apply plugin: 'java'
+apply plugin: 'maven'
+apply plugin: 'war'
+apply plugin: 'jetty'
+
+group = 'jp.inc.forrest'
+version = '0.1.0-SNAPSHOT'
+
+project.ext {
+  artifactId = 'spring.session'
+}
+
+// エンコーディング
+def defaultEncoding = 'UTF-8'
+[compileJava, compileTestJava]*.options*.encoding = defaultEncoding
+
+// コンパイラバージョン
+sourceCompatibility = "$javaVersion"
+targetCompatibility = "$javaVersion"
+
+// Maven リポジトリ
+repositories {
+    mavenCentral()
+}
+
+// ソース
+sourceSets {
+
+	
+	//generated {
+    //    java.srcDir file('src/main/generated')
+    //}
+}
+
+// 依存ライブラリ
+dependencies {
+    compile "org.springframework:spring-webmvc:$springVersion",
+    	"org.springframework:spring-web:$springVersion",
+    	"redis.clients:jedis:$jedisVersion",
+    	"org.apache.commons:commons-pool2:$commonsPool2Version",
+    	"org.springframework.data:spring-data-redis:$springDataRedisVersion",
+    	"org.springframework.session:spring-session:$springSessionVersion",
+    	"com.fasterxml.jackson.core:jackson-core:$jacksonVersion",
+    	"com.fasterxml.jackson.core:jackson-annotations:$jacksonVersion",
+    	"com.fasterxml.jackson.core:jackson-databind:$jacksonVersion",
+    	"org.slf4j:jcl-over-slf4j:$slf4Version",
+    	"ch.qos.logback:logback-classic:$logbackVersion"
+    
+    providedCompile "javax.servlet:javax.servlet-api:$javaxServletApiVersion",
+    	"javax.servlet:jstl:$jstlVersion",
+    	"org.apache.taglibs:taglibs-standard-impl:$taglibsStandardImplVersion"
+    	
+    testCompile 'junit:junit:4.11'
+    testCompile "org.springframework:spring-test:$springVersion"
+    
+    // generatedCompile
+}
+
+war {
+
+    //copy {
+    //    from configurations.compile
+    //    into "dist/lib"
+    //}
+
+    from 'src/main/weabapp'
+    //webInf { from 'src/main/webapp/WEB-INF' }
+    //webXml = file('src/main/webapp/WEB-INF/web.xml')
+    //metaInf { from 'src/main/webapp/META-INF' }
+    //classpath fileTree('dist/lib')
+    //classpath configurations.compile
+
+}
+
+//jar {
+    // ソース指定
+    //from sourceSets.main.output
+    //from sourceSets.generated.output
+	// 依存ライブラリのコピー    
+    //copy {
+    //    from configurations.compile
+    //    into "dist/lib"
+    //}
+    // クラスパス文字列の生成
+    //def manifestClasspath = configurations.compile.collect{ 'lib/' + it.getName() }.join(' ')
+    // マニフェスト
+    //manifest {
+    //    attributes "Main-Class" : ""
+    //    attributes 'Class-Path': manifestClasspath
+    //}
+    // リリース資材設定
+    //from (configurations.compile.resolve().collect { it.isDirectory() ? it : fileTree(it) }) {
+    //    exclude 'META-INF/MANIFEST.MF'
+    //    exclude 'META-INF/*.SF'
+    //    exclude 'META-INF/*.DSA'
+    //    exclude 'META-INF/*.RSA'
+    //    exclude '**/*.jar'
+    //}
+    // 配布用資材ディレクトリ
+    //destinationDir = file("dist")
+    // 実行可能JARファイル名
+    //archiveName = ''
+//}
+
+// build/distributionsへ配布用資材.zipを作成
+//task distZip(type: Zip) {
+//    from 'dist'
+//}
+
+// distを削除
+//task distDel(type: Delete) {
+//  delete 'dist'
+//}
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            //repository(url: uri("${buildDir}/repo"))
+            repository(url: uri("C:/Dev/repo"))
+        }
+    }
+}

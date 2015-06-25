@@ -11,3 +11,7 @@
 # redis-cli
 > monitor
 ```
+
+#####RELEASE
+0.1.1-SNAPSHOT
+* MavenプロジェクトからGradleプロジェクトへ変換しました。
